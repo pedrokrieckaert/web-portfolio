@@ -1,0 +1,101 @@
+/* Global styles------------------------------------*/
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  body {
+    color: #F7FFF7;
+    background-color: #555555;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .content-wrap {
+    max-width: 800px;
+    width: 85%;
+    margin: 0 auto;
+    padding: 60px 0;
+  }
+
+  .header-wrap{
+    max-width: 85px;
+    width: 85%;
+    margin: 0 auto;
+    padding: 60px 0;
+  }
+
+  .header-wrap h2{
+    font-size: 30px;
+    transform: translate(-50%, -30px);
+  }
+
+  .grid{
+    display: grid;
+    height: calc(3*575px);
+    grid-template-rows: [header]100px repeat(3, 575px);
+    grid-row-gap: 50px;
+  }
+
+/* Header styles------------------------------------*/
+  header {
+    background: #343434;
+    color: #F7FFF7;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+/* Portfolio Styles------------------------------------*/
+    /* Section Styles----------------------------------*/
+    .portfolio-cont {
+        background: #2F3061;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .portfolio .sec-header{
+        grid-row: header;
+    }
+
+    .one{
+        grid-row-start: 2;
+    }
+    
+    .two{
+        grid-row-start: 3;
+    }
+
+    .three{
+        grid-row-start: 4;       
+    }
+    /* Content Styles----------------------------------*/
+    .content-grid{
+        display: grid;
+        height: 100%;
+        width: 85%;
+        margin: 0 auto;
+        grid-template-rows: [header]75px [slide]400px [nav]50px;
+        grid-row-gap: 25px;
+    }
+
+    .content-head{
+        height: 75px;
+        background-color: red;
+        grid-row-start: header;
+    }
+
+    .content-slide{
+        height: 400px;
+        background-color: purple;
+        grid-row-start: slide;
+    }
+
+    .content-nav{
+        height: 50px;
+        background-color: green;
+        grid-row-start: nav;
+    }
