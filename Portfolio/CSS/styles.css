@@ -16,6 +16,11 @@ html {
     line-height: 1.5;
   }
 
+  h3 {
+    font-size: 30px;
+    margin: 0;
+    }
+
   .content-wrap {
     max-width: 800px;
     width: 85%;
@@ -24,15 +29,13 @@ html {
   }
 
   .header-wrap{
-    max-width: 85px;
     width: 85%;
     margin: 0 auto;
-    padding: 60px 0;
   }
 
   .header-wrap h2{
-    font-size: 30px;
-    transform: translate(-50%, -30px);
+    font-size: 50px;
+    text-align: center;
   }
 
   .grid{
@@ -79,23 +82,72 @@ html {
         width: 85%;
         margin: 0 auto;
         grid-template-rows: [header]75px [slide]400px [nav]50px;
+        grid-template-columns: repeat(2,1fr);
         grid-row-gap: 25px;
     }
 
     .content-head{
         height: 75px;
-        background-color: red;
+        margin: 0 auto;
+        padding-top: 20px;
         grid-row-start: header;
+        grid-column-start: 1;
+        grid-column-end: 3;
     }
 
     .content-slide{
         height: 400px;
-        background-color: purple;
         grid-row-start: slide;
+        grid-column-start: 1;
+        grid-column-end: 3;
+
+        display: grid;
+        grid-template-rows: [head]50px [desc]300px [skills]50px;
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .slide-head{
+        grid-row-start: head;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        text-align: center;        
+    }
+
+    .slide-img{
+        background-color: red;
+        grid-row-start: head;
+        grid-row-end: 4;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+
+    .slide-desc{
+        grid-row-start: desc;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        padding: 20px;
+    }
+
+    .slide-skill{
+        margin: 0;
+        padding: 0;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        padding-left: 20px;
+    }
+
+    .slide-skill li{
+        margin-left: 5px;
+        display: inline;
     }
 
     .content-nav{
+        display: block;
         height: 50px;
-        background-color: green;
         grid-row-start: nav;
+        grid-column-start: 1;
+        grid-column-end: 3;
+        font-size: 35px;
+        text-align: center;
+        letter-spacing: 20px;
     }
