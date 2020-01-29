@@ -120,10 +120,9 @@ header {
       grid-column-end: 2;
   }
 
-  .slide-img div{
+  .slide-img img{
       width: 650px;
       height: 400px;
-      background-size: fill;
   }
 
   .slide-desc{

@@ -13,33 +13,30 @@ import React from 'react';
   })
 */
 
-var data = {
-    "projects":[
-        {"name": "Project 1",
-        "image": {
-            "src": require("../imgs/testImg.jpg"),
-            "alt": 'Test Image'
-            },
-        "desc": "Lorem Ipsum",
-        "skills":["test 1", "test 2", "test 3"]},
-        {"name": "Project 2",
-        "image": { 
-            "src": require("../imgs/testImg.jpg"),
-            "alt": 'Test Image'
-            },
-        "desc": "Lorem Ipsum",
-        "skills":["test 1", "test 2", "test 3"]}
-    ]
-}
-
 class Slideshow extends React.Component{
     constructor(props){
         super(props);
-        this.state = 0
+        this.state = {
+            projects: [
+               {name: "Project 1",
+                image: {
+                    src: "imgs/testImg.jpg",
+                    alt: "Test Image 1"},
+                desc: "Lorem Ipsum",
+                skills: ["test 1", "test 2", "test 3"]},
+                {name: "Project 2",
+                image: {
+                    src: "imgs/testImg_2.jpg",
+                    alt: "Test Image 1"},
+                desc: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+                skills: ["test 4", "test 5", "test 6"]} 
+            ],
+            id: 0
+        }
     }
 
     changeSlide = () => {
-        this.setState(1);
+        this.setState({id: 1});
     }
 
     render() {
@@ -50,15 +47,13 @@ class Slideshow extends React.Component{
                         <h3>Portfolio</h3>
                     </div>
                     <div className = "content-slide">
-                        <div className = "slide-img">
-                            <div style= {{"background": `url(${data.projects[this.state].image.src})`}}></div>
-                        </div>
-                        <h3 className = "slide-head">{data.projects[this.state].name}</h3>
-                        <p className = "slide-desc">{data.projects[this.state].desc}</p>
+                    <img class = "slide-img" id = "proj1-img" alt = {this.state.projects[this.state.id].image.alt} src = {this.state.projects[this.state.id].image.src}></img>
+                        <h3 className = "slide-head">{this.state.projects[this.state.id].name}</h3>
+                        <p className = "slide-desc">{this.state.projects[this.state.id].desc}</p>
                         <ul className = "slide-skill">
-                            <li>&bull; {data.projects[this.state].skills[0]}</li>
-                            <li>&bull; {data.projects[this.state].skills[1]}</li>
-                            <li>&bull; {data.projects[this.state].skills[2]}</li>
+                            <li>&bull; {this.state.projects[this.state.id].skills[0]}</li>
+                            <li>&bull; {this.state.projects[this.state.id].skills[1]}</li>
+                            <li>&bull; {this.state.projects[this.state.id].skills[2]}</li>
                         </ul>
                     </div>
                     <div className = "content-nav">
