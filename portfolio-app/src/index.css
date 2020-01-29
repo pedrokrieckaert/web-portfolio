@@ -103,6 +103,7 @@ header {
       display: grid;
       grid-template-rows: [head]50px [desc]300px [skills]50px;
       grid-template-columns: repeat(2,1fr);
+      overflow: hidden;
   }
 
   .slide-head{
@@ -113,11 +114,16 @@ header {
   }
 
   .slide-img{
-      background-color: red;
       grid-row-start: head;
       grid-row-end: 4;
       grid-column-start: 1;
       grid-column-end: 2;
+  }
+
+  .slide-img div{
+      width: 650px;
+      height: 400px;
+      background-size: fill;
   }
 
   .slide-desc{

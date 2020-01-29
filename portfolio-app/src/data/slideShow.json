@@ -1,8 +1,18 @@
 {
-    "name": "Test 1",
-    "image": {
-        "src": "../img/testImg.jpg"
-    },
-    "desc": "Lorem Ipsum",
-    "skills":["test 1", "test 2", "test 3"]
+    "projects" : [
+        {"name": "Test 1",
+        "image": {
+            "src": "../img/testImg.jpg",
+            "alt": "Test Image 1"},
+        "desc": "Lorem Ipsum",
+        "skills":["test 1", "test 2", "test 3"]},
+        
+        {"name": "Project 2",
+        "image": {
+            "src": "../img/testImg.jpg",
+            "alt": "Test Image 2"},
+        "desc": "Lorem Ipsum",
+        "skills":["test 1", "test 2", "test 3"]}
+    ]
+
 }
