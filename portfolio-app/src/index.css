@@ -155,3 +155,15 @@ header {
       text-align: center;
       letter-spacing: 20px;
   }
+
+  .content-nav span{
+    -webkit-user-select: none;       
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    cursor: pointer;
+  }
+
+  .content-nav .active{
+    color: red;
+  }

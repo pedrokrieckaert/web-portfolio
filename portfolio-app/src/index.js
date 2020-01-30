@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Slideshow from './reactComponents/portfolio-slideshow';
+import Slideshow from './reactComponents/slideShow/portfolio-slideshow';
 import WorkExp from './reactComponents/portfolio-workExp';
 import * as serviceWorker from './serviceWorker';
 
