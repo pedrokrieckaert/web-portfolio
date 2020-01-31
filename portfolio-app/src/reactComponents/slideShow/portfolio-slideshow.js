@@ -1,5 +1,6 @@
 import React from 'react';
-import Bull from './bull'
+import Bull from './bull';
+import ModalSlideshow from './modal-slideshow';
 
 class Slideshow extends React.Component{
     constructor(props){
@@ -32,7 +33,7 @@ class Slideshow extends React.Component{
             });
 
 
-            var intervalId = setInterval(this.changeSlide, 5000);
+            var intervalId = setInterval(this.changeSlide, 10000);
             this.setState({intervalId: intervalId});
     }
 
@@ -65,7 +66,7 @@ class Slideshow extends React.Component{
 
         //Reset auto show timer
         clearInterval(this.state.intervalId);
-        var intervalId = setInterval(this.changeSlide, 5000);
+        var intervalId = setInterval(this.changeSlide, 10000);
         this.setState({intervalId: intervalId});
     }
 
@@ -86,7 +87,7 @@ class Slideshow extends React.Component{
 
         //Reset auto show timer
         clearInterval(this.state.intervalId);
-        var intervalId = setInterval(this.changeSlide, 5000);
+        var intervalId = setInterval(this.changeSlide, 10000);
         this.setState({intervalId: intervalId});
     }
 
@@ -107,7 +108,7 @@ class Slideshow extends React.Component{
 
         //Reset auto show timer
         clearInterval(this.state.intervalId);
-        var intervalId = setInterval(this.changeSlide, 5000);
+        var intervalId = setInterval(this.changeSlide, 10000);
         this.setState({intervalId: intervalId});
     }
 
@@ -118,10 +119,11 @@ class Slideshow extends React.Component{
                     <div className = "content-head">
                         <h3>Portfolio</h3>
                     </div>
-                    <div className = "content-slide" data-key = {this.state.id}>
+                    <div className = "content-slide">
                     <img className = "slide-img" id = "proj1-img" alt = {this.state.projects[this.state.id].image.alt} src = {this.state.projects[this.state.id].image.src}></img>
                         <h3 className = "slide-head">{this.state.projects[this.state.id].name}</h3>
                         <p className = "slide-desc">{this.state.projects[this.state.id].desc}</p>
+                        <ModalSlideshow></ModalSlideshow>
                         <ul className = "slide-skill">
                             {Array.from({
                                 length: this.state.projects[this.state.id].skills.length},
@@ -140,6 +142,7 @@ class Slideshow extends React.Component{
                             )
                         )}
                         <span onClick = {this.navNextSlide}>&#9654;</span>
+                        
                     </div>
                 </div>
             </div>
