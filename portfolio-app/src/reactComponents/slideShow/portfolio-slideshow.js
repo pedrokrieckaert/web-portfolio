@@ -7,12 +7,13 @@ class Slideshow extends React.Component{
         super(props);
         
         this.state = {
-            projects: [{"name": "Test 1",
+            projects: [{"name": "temp project",
             "image": {
                 "src": "imgs/testImg.jpg",
-                "alt": "Test Image 1"},
+                "alt": "temp Image 1"},
             "desc": "Lorem Ipsum",
-            "skills":["test 1", "test 2", "test 3"]}],
+            "skills":["temp 1", "temp 2", "temp 3"],
+            "detaildesc":"temp"}],
             id: 0,
             idMax: null,
             intervalId: null

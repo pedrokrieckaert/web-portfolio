@@ -33,9 +33,16 @@ class ModalSlideshow extends React.Component {
   }
  
   render() {
+      let followProj;
+
+      if(this.props.projData.link !== ""){
+          followProj = <a className = "modal-btn" href = {this.props.projData.link} target = "blank">Follow this porject</a>;
+      }else{
+          followProj = null;
+      }
     return (
       <div>
-        <button onClick={this.openModal}>Read More</button>
+        <button className = "modal-btn modal-open" onClick={this.openModal}>Read More</button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.props.clearTimer}
@@ -47,7 +54,7 @@ class ModalSlideshow extends React.Component {
           overlayClassName = "modal-overlay"
         >
         <div className = "modal-content-grid">
-          <h2 ref={subtitle => this.subtitle = subtitle}>{this.props.projData.name}</h2>
+          <h2 className = "modal-head" ref={subtitle => this.subtitle = subtitle}>{this.props.projData.name}</h2>
           <ul className = "modal-skill">
                             {Array.from({
                                 length: this.props.projData.skills.length},
@@ -56,9 +63,10 @@ class ModalSlideshow extends React.Component {
                                 )
                             )}
                         </ul>
-          <img src = {this.props.projData.image.src} alt = {this.props.projData.image.alt}></img>
-          <p className = "modal-text">{this.props.projData.desc}</p>
-          <button onClick={this.closeModal}>close</button>
+          <img className = "modal-img" src = {this.props.projData.image.src} alt = {this.props.projData.image.alt}></img>
+          <p className = "modal-text">{this.props.projData.detaildesc}</p>
+          <div>{followProj}</div>
+          <button className = "modal-btn modal-close" onClick={this.closeModal}>Close</button>
           </div>
         </Modal>
       </div>

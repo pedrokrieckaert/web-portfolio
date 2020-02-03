@@ -1,9 +1,9 @@
 .modal-body{
     position: absolute;
-    top: 40px;
-    left: 40px;
-    right: 40px;
-    bottom: 40px;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
     border: 1px solid #ccc;
     overflow: auto;
     border-radius: 4px;
@@ -18,5 +18,87 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.75);
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal-content-grid{
+    height: 100%;
+    display: grid;
+    grid-template-rows: [head]15% [skill]10% [cont]70% [foot]5%;
+    grid-template-columns: repeat(2,1fr);
+}
+
+/*Modal Content*/
+
+.modal-head{
+    margin: 10px 0 0 0;
+    grid-row-start: head;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    text-align: center;        
+    font-size: 45px;
+}
+
+.modal-skill{
+    margin: 0;
+    padding: 0;
+    grid-row-start: skill;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    text-align: center;
+    font-size: 25px;
+}
+
+.modal-skill li{
+    margin-left: 5px;
+    display: inline;
+}
+
+.modal-img{
+    grid-row-start: cont;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.modal-img img{
+    width: 650px;
+    height: 100%;
+}
+
+.modal-cont{
+    grid-row-start: cont;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    padding: 20px;
+    text-align: center;
+    overflow: scroll;
+}
+
+.modal-btn{
+    color: #000000;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 2px;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 15px;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.modal-btn:hover{
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+.modal-close{
+    grid-row-start: foot;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: 100px
+}
+
+.modal-open{
+    margin: 0 0 0 20px;
 }

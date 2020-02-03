@@ -1,0 +1,34 @@
+{
+    "projects" : [
+        {"name": "Portfolio Website",
+        "image": {
+            "src": "imgs/testImg.jpg",
+            "alt": "Test Image 1"},
+        "desc": "This was a project during my first year at The Hague University of Applied sciences. It was my first time creating a website using React.js where the goal was to display all this content from a JSON file in order to allow for quick future changes to the content.",
+        "skills":["HTML/CSS", "JavaScript", "React.js"],
+        "detaildesc": "When we received this assignment I was very keen on using some kind of framework because I want to expand my programing capabilities. This suited one of my prefered methods of learning which is learning by doing. Because this is my first attempt at using React.js, everything is very experimental and probably 'clunky'. I intend to continually improve this site over time to really hone my skills with the framework. \n There is an important structure I'd like to mention regarding the site. All the content on display is pulled from a JSON file. I wanted to work with such a structure as I wanted to make the effort of updating the content as effortless as possible. This also allows me to keep the site in a single page. \nI have quite some plans for this site so feel free to follow the progress from my GitHub. Disclaimer: Content on the GitHub represents my casual behaviors and should not be considered as my professional behaviors; which is represented on this website.",
+        "link":"https://github.com/PEEKrieckaert/Profile-Website"
+        },
+        
+        {"name": "Project 2",
+        "image": {
+            "src": "imgs/testImg_2.jpg",
+            "alt": "Test Image 2"},
+        "desc": "Hey just making sure this is working as intended.",
+        "skills":["test 1", "test 2"],
+        "detaildesc": " ",
+        "link":""
+        },
+
+        {"name": "Project 3",
+            "image": {
+                "src": "imgs/testImg.jpg",
+                "alt": "Test Image 3"},
+            "desc": "I'm the third one",
+            "skills":["test 1", "test 2", "test 3"],
+            "detaildesc": " ",
+            "link":""
+        }
+    ]
+
+}
