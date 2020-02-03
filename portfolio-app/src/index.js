@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Slideshow from './reactComponents/slideShow/portfolio-slideshow';
-import WorkExp from './reactComponents/portfolio-workExp';
+import WorkExp from './reactComponents/experienceWorkEdu/portfolio-workExp';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<Slideshow />, document.getElementById('content-protfolio'));

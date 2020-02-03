@@ -1,6 +1,7 @@
 import React from 'react';
-import Bull from './bull';
-import ModalSlideshow from './modal-slideshow';
+import './port-slide.css';
+import Bull from './slide-modal/bull';
+import ModalSlideshow from './slide-modal/modal-slideshow';
 
 class Slideshow extends React.Component{
     constructor(props){
