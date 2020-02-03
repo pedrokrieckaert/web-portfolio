@@ -4,6 +4,7 @@ import ModalStyle from './modal-slideshow.css';
  
 Modal.setAppElement('body');
 
+
 class ModalSlideshow extends React.Component {
   constructor(props) {
     super(props);
@@ -18,11 +19,12 @@ class ModalSlideshow extends React.Component {
   }
  
   openModal() {
-    this.setState({modalIsOpen: true});
+    this.setState({
+        modalIsOpen: true,
+    });
   }
  
   afterOpenModal() {
-    // references are now sync'd and can be accessed.
     this.subtitle.style.color = '#f00';
   }
  
@@ -36,21 +38,33 @@ class ModalSlideshow extends React.Component {
         <button onClick={this.openModal}>Read More</button>
         <Modal
           isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
+          onAfterOpen={this.props.clearTimer}
           onRequestClose={this.closeModal}
+          onAfterClose={this.props.startTimer}
           style={ModalStyle}
-          contentLabel="Example Modal"
+          contentLabel="Projects Details"
           className = "modal-body"
           overlayClassName = "modal-overlay"
         >
- 
-          <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
-          <p className = "modal-text">Testing out the modal, gonna check if I can pass some data here soon.</p>
+        <div className = "modal-content-grid">
+          <h2 ref={subtitle => this.subtitle = subtitle}>{this.props.projData.name}</h2>
+          <ul className = "modal-skill">
+                            {Array.from({
+                                length: this.props.projData.skills.length},
+                                (_, index) => (
+                                    <li key = {index}>&bull; {this.props.projData.skills[index]}</li>
+                                )
+                            )}
+                        </ul>
+          <img src = {this.props.projData.image.src} alt = {this.props.projData.image.alt}></img>
+          <p className = "modal-text">{this.props.projData.desc}</p>
           <button onClick={this.closeModal}>close</button>
+          </div>
         </Modal>
       </div>
     );
   }
 }
+
 
 export default ModalSlideshow;

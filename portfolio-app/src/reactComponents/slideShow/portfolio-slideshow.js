@@ -112,6 +112,16 @@ class Slideshow extends React.Component{
         this.setState({intervalId: intervalId});
     }
 
+    //Handles the slideshow timer for modal content
+    clearTimer = () => {
+        clearInterval(this.state.intervalId);
+    }
+
+    startTimer = () =>{
+        var intervalId = setInterval(this.changeSlide, 10000);
+        this.setState({intervalId: intervalId}); 
+    }
+
     render() {
         return(
             <div>
@@ -123,7 +133,7 @@ class Slideshow extends React.Component{
                     <img className = "slide-img" id = "proj1-img" alt = {this.state.projects[this.state.id].image.alt} src = {this.state.projects[this.state.id].image.src}></img>
                         <h3 className = "slide-head">{this.state.projects[this.state.id].name}</h3>
                         <p className = "slide-desc">{this.state.projects[this.state.id].desc}</p>
-                        <ModalSlideshow></ModalSlideshow>
+                        <ModalSlideshow projData = {this.state.projects[this.state.id]} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>
                         <ul className = "slide-skill">
                             {Array.from({
                                 length: this.state.projects[this.state.id].skills.length},
@@ -138,11 +148,10 @@ class Slideshow extends React.Component{
                         {Array.from({
                             length: this.state.idMax},
                             (_, index) => (
-                                <Bull index = {index} key = {index} isActive = {this.state.activeIndex === index} onClick = {this.navBullClick}></Bull>
+                                <Bull index = {index} key = {index} isActive = {this.state.activeIndex === index} onClick = {this.navBullClick}/>
                             )
                         )}
                         <span onClick = {this.navNextSlide}>&#9654;</span>
-                        
                     </div>
                 </div>
             </div>

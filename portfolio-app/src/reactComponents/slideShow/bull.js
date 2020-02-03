@@ -8,7 +8,7 @@ class Bull extends React.Component {
             <span className = {this.props.isActive ? 'active' : 'inActive'} onClick = {this.handleClick}>
                 &bull;
             </span>
-        )
+        );
     }
 }
 
