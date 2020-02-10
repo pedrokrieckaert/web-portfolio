@@ -1,0 +1,142 @@
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #F7FFF7;
+  background-color: #555555;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+header{
+  margin-bottom: 25px;
+}
+
+header h1{
+  font-size: 50px;
+}
+
+header img{
+  margin: 40px 0 0 20px;
+  float: right;
+  height: 400px;
+  border: 1px solid #2F3061;
+  border-radius: 4px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+h3 {
+  font-size: 30px;
+  margin: 0;
+  }
+
+.content-wrap {
+  max-width: 800px;
+  width: 85%;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+.header-wrap{
+  width: 85%;
+  margin: 0 auto;
+}
+
+.header-wrap h2{
+  font-size: 50px;
+  text-align: center;
+}
+
+.grid{
+  display: grid;
+  height: calc((2*575px) + 200px);
+  grid-template-rows: repeat(2, 625px);
+  grid-row-gap: 50px;
+}
+
+.btn{
+  color: #000000;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  padding: 10px 15px;
+
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.btn:hover{
+  background-color: #4596ff;
+  color: #ffffff;
+}
+
+/* Header styles------------------------------------*/
+header {
+  background: #343434;
+  color: #F7FFF7;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Footer styles------------------------------------*/
+footer{
+  height: 50px;
+  background-color: #343434;
+}
+
+footer p{
+  margin: 0;
+  padding: 15px 0 0 25px;
+}
+
+footer a{
+  color: #ffffff;
+}
+
+footer a:hover{
+  color: #4596ff;
+}
+
+/* Portfolio Styles------------------------------------*/
+  /* Section Styles----------------------------------*/
+  .content {
+      background: #2F3061;
+      overflow: hidden;
+      height: 100%;
+  }
+
+  #content-protfolio{
+      grid-row-start: 1;
+  }
+  
+  #content-workexperience{
+      grid-row-start: 2;
+  }
+  /* Content Styles----------------------------------*/
+  .content-grid{
+      display: grid;
+      height: 100%;
+      width: 85%;
+      margin: 0 auto;
+      grid-template-rows: [header]75px [slide]450px [nav]50px;
+      grid-template-columns:repeat(2,1fr);
+      grid-row-gap: 25px;
+  }
+
+  .content-head{
+      height: 75px;
+      margin: 0 auto;
+      padding-top: 20px;
+      text-align: center;
+      grid-row-start: header;
+      grid-column-start: 1;
+      grid-column-end: 3;
+  }
+  
