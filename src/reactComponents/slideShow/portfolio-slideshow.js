@@ -134,26 +134,28 @@ class Slideshow extends React.Component{
             <div>
                 <div className="content-grid">
                     <div className = "content-head">
-                        <h3>Portfolio</h3>
+                        <h2>Portfolio</h2>
                     </div>
-                    <div className = "content-slide">
-                        <Media class = "slide-img" imgAlt = {currentProject.image.alt} imgSrc = {currentProject.image.src} vidSrc = {currentProject.video} clearTimer = {this.clearTimer} startTimer = {this.startTimer}></Media>
-                        <h3 className = "slide-head">{currentProject.name}</h3>
-                        <p className = "slide-desc">{currentProject.desc}</p>
-                        <ModalSlideshow projData = {currentProject} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>
-                        <LiArray class = "slide-skill" list = {currentProject.skills}></LiArray>
+                    <div className = "content-navOverlay">
+                        <div className = "content-slide">
+                            <Media class = "slide-img" imgAlt = {currentProject.image.alt} imgSrc = {currentProject.image.src} vidSrc = {currentProject.video} clearTimer = {this.clearTimer} startTimer = {this.startTimer}></Media>
+                            <h3 className = "slide-head">{currentProject.name}</h3>
+                            <p className = "slide-desc">{currentProject.desc}</p>
+                            <LiArray class = "slide-skill" list = {currentProject.skills}></LiArray>
+                        </div>
+                        <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn" id = "next" onClick = {this.navNextSlide}></img>
+                        <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn" id = "prev" onClick = {this.navNextSlide}></img>
                     </div>
-                    <div className = "content-nav">
-                        <span onClick = {this.navPrevSlide}>&#9664;</span>
+                </div>
+                <ModalSlideshow projData = {currentProject} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>
+                <div className = "content-nav">
                         {Array.from({
                             length: this.state.idMax},
                             (_, index) => (
                                 <Bull index = {index} key = {index} isActive = {this.state.activeIndex === index} onClick = {this.navBullClick}/>
                             )
                         )}
-                        <span onClick = {this.navNextSlide}>&#9654;</span>
                     </div>
-                </div>
             </div>
 
         );
