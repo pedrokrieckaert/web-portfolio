@@ -26,11 +26,6 @@
     border: 1px solid #4596ff;
 }
 
-.slide-img img{
-    width: 650px;
-    height: 400px;
-}
-
 .slide-desc{
     grid-row-start: desc;
     grid-column-start: 2;

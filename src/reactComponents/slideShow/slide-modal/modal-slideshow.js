@@ -36,7 +36,7 @@ class ModalSlideshow extends React.Component {
   render() {
       let followProj;
 
-      if(this.props.projData.link !== ""){
+      if(this.props.projData.link !== null){
           followProj = <a className = "btn" href = {this.props.projData.link} target = "blank">View this porject</a>;
       }else{
           followProj = null;

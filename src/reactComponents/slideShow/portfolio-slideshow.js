@@ -3,6 +3,7 @@ import './port-slide.css';
 import Bull from './slide-modal/bull';
 import ModalSlideshow from './slide-modal/modal-slideshow';
 import LiArray from '../globalComponents/liArray';
+import Media from '../globalComponents/media';
 
 class Slideshow extends React.Component{
     constructor(props){
@@ -23,7 +24,8 @@ class Slideshow extends React.Component{
     }
 
     componentDidMount() {
-        fetch('https://pedrokrieckaert.github.io/data/slideShow.json')
+        //fetch('https://pedrokrieckaert.github.io/data/slideShow.json')
+        fetch('./data/slideShow.json')
             .then((response) => {
                 return response.json();
             })
@@ -126,6 +128,8 @@ class Slideshow extends React.Component{
     }
 
     render() {
+        var currentProject = this.state.projects[this.state.id];
+
         return(
             <div>
                 <div className="content-grid">
@@ -133,11 +137,11 @@ class Slideshow extends React.Component{
                         <h3>Portfolio</h3>
                     </div>
                     <div className = "content-slide">
-                    <img className = "slide-img" id = "proj1-img" alt = {this.state.projects[this.state.id].image.alt} src = {this.state.projects[this.state.id].image.src}></img>
-                        <h3 className = "slide-head">{this.state.projects[this.state.id].name}</h3>
-                        <p className = "slide-desc">{this.state.projects[this.state.id].desc}</p>
-                        <ModalSlideshow projData = {this.state.projects[this.state.id]} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>
-                        <LiArray class = "slide-skill" list = {this.state.projects[this.state.id].skills}></LiArray>
+                        <Media class = "slide-img" imgAlt = {currentProject.image.alt} imgSrc = {currentProject.image.src} vidSrc = {currentProject.video} clearTimer = {this.clearTimer} startTimer = {this.startTimer}></Media>
+                        <h3 className = "slide-head">{currentProject.name}</h3>
+                        <p className = "slide-desc">{currentProject.desc}</p>
+                        <ModalSlideshow projData = {currentProject} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>
+                        <LiArray class = "slide-skill" list = {currentProject.skills}></LiArray>
                     </div>
                     <div className = "content-nav">
                         <span onClick = {this.navPrevSlide}>&#9664;</span>

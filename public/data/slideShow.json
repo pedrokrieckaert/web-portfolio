@@ -3,7 +3,8 @@
         {"name": "Portfolio Website",
         "image": {
             "src": "imgs/logo.svg",
-            "alt": "Test Image 1"},
+            "alt": "Logo of React"},
+        "video": null,
         "desc": "This was a project during my first year at The Hague University of Applied sciences. It was my first time creating a website using React.js where the goal was to display all this content from a JSON file in order to allow for quick future changes to the content.",
         "skills":["HTML/CSS", "JavaScript", "React.js"],
         "detaildesc": "When we received this assignment I was very keen on using some kind of framework because I want to expand my programing capabilities. This suited one of my prefered methods of learning which is learning by doing. Because this is my first attempt at using React.js, everything is very experimental and probably 'clunky'. I intend to continually improve this site over time to really hone my skills with the framework. \n There is an important structure I'd like to mention regarding the site. All the content on display is pulled from a JSON file. I wanted to work with such a structure as I wanted to make the effort of updating the content as effortless as possible. This also allows me to keep the site in a single page. \nI have quite some plans for this site so feel free to follow the progress from my GitHub. Disclaimer: Content on the GitHub represents my casual behaviors and should not be considered as my professional behaviors; which is represented on this website.",
@@ -14,6 +15,7 @@
         "image": {
             "src": "imgs/bespokeDesign.PNG",
             "alt": "Test Image 2"},
+        "video": null,
         "desc": "A school project that involved an external client. This was my first project where I worked through the full design cycle and Adobe XD. The project had a lengthy empathising phase where my project teammate and I each conducted research on an individual and derived insights from these findings.",
         "skills":["Adobe XD", "Ethnographic Interviewing", "The Design Cycle"],
         "detaildesc": "A school project that involved an external client. This was my first project where I worked through the full design cycle and Adobe XD. The project had a lengthy empathising phase where my project teammate and I each conducted research on an individual and derived insights from these findings. \nThis first year project was the first time that we were expected to work through the entire design cycle. The project was a collaboration between my school (The Hague University of Applied Science) and an external client. The end products of the assignment were two applications, one that would let a user create a unique card and the second was a system where a user could receive a unique unwrapping experience for an intangible gift. \nIt started with the empathising phase where we spent roughly a month researching an assigned user from our course. Using techniques such as Ethnographic Interviewing, we were able to collect sufficient data and derive insights to be in the Define phase. During this phase, we came up with many ideas and concepts that would cater to the needs of our users. This phase is closely tied to the Ideate phase where the ideas and concepts are put through some techniques that allow us to see gaps or flaws that could be improved. These two phases can be repeated until a satisfying concept and design vision is created.  The design vision we came up with was: which was an AR treasure hunt that the gift receiver could experience on their phone using a physical card designed by the gift giver. The remaining two phases, Prototyping and Testing, were done in a similar fashion to Define and Ideate. First we prototyped the design and then we tested it with various users, received and implemented the feedback and repeated until near our deadline. \nI was responsible for the first application, a system to let the user create a unique card based on our design vision, feel free to explore the app."
@@ -25,6 +27,7 @@
             "image": {
                 "src": "imgs/processingMosaic.PNG",
                 "alt": "Test Image 3"},
+            "video": null,
             "desc": "The final project I created during a week long programming bootcamp centering around processing.",
             "skills":["Processing 3"],
             "detaildesc": "This project was the culmination of a week long bootcamp where we were taught the Java library Processing 3. The bootcamp had set challenges that had to be completed at the end of each day. These challenges were designed to be a culmination of each participants' skills that they've acquired up to that point. The final challenge featured some requirements but the rest was free form. \nThe program I created would take an image, inputted by the user, and convert it to a mosaic consisting of tiny ellipses on a 100 x 100 grid. The program would accomplish this by resizing the image to fit the canvas size and then scan an average color in 10 x 10 pixel area. Additionally the the coordinates of where the color was scanned was stored into an object which would then be stored into an array. The array was used for an effect I wanted the program to perform. Each object in the array would be assigned a starting point beyond the canvas size, they were then instructed to tween back to their origin point. This created a look of all the ellipses assembling the image. Disclaimer: Content on the GitHub represents my casual behaviors and should not be considered as my professional behaviors; which is represented on this website.",
@@ -32,13 +35,14 @@
         },
         {"name": "GameMaker Prototype",
             "image": {
-                "src":"imgs/projectArena.PNG",
-                "alt":""},
+                "src":"imgs/projectArena/projectArena.PNG",
+                "alt":"Screenshot of the gameplay"},
+            "video": "imgs/projectArena/projectArenaVid.mp4",
             "desc": "A prototype I created using the GameMaker Studio 2 Engine and it's programming language GML",
             "skills": ["GameMaker Studio 2"],
             "detaildesc": "This was a project for my previous school Hanze University Groningen where I studied Game Design. The project was our first game that we would have to design, program and create some art assets. I decided to make the most of the project and learn the program’s programming language: GML. \nThe project went on for a bit after the assignment was completed as I wanted to develop it further as something that might be portfolio worthy. I took feedback from my peers and gradually worked on improving it. Currently the prototype is as shown due to me not pursuing this field any longer. \nFeel free to try out the game yourself, instructions to the game are in the folder."
             ,
-            "link": ""
+            "link": null
 
         }
     ]
