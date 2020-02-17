@@ -1,0 +1,28 @@
+.nav-bullet{
+    stroke-width: 3px;
+  }
+  
+  .inner-bullet{
+    stroke: #fff;
+  }
+  
+  .stroke-bullet{
+  }
+   
+  .bull-active .inner-bullet{
+    fill: #4596ff;
+  }
+  
+  .bull-active .stroke-bullet{
+    stroke: #4596ff;
+  }
+  
+  .bull-inactive .inner-bullet{
+    fill: #fff;
+    stroke: none;
+  }
+  
+  .bull-inactive .stroke-bullet{
+    stroke: #4596ff;
+    stroke-dashoffset: 0;
+  }

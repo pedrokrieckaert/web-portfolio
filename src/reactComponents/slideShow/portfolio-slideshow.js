@@ -19,7 +19,10 @@ class Slideshow extends React.Component{
             "detaildesc":"temp"}],
             id: 0,
             idMax: null,
-            intervalId: null
+            intervalId: null,
+            intervalStart: null,
+            timerStep: 10000,
+            timeRemain: null
         }
     }
 
@@ -38,7 +41,9 @@ class Slideshow extends React.Component{
             });
 
 
-            var intervalId = setInterval(this.changeSlide, 10000);
+            var intervalId = setInterval(this.changeSlide, this.state.timerStep);
+            this.setState({intervalStart: (new Date()).getTime()});
+            setInterval(this.timeRemain,10);
             this.setState({intervalId: intervalId});
     }
 
@@ -46,11 +51,17 @@ class Slideshow extends React.Component{
         clearInterval(this.state.intervalId);
     }
 
+    timeRemain = () => {
+        this.setState({
+            timeRemain: this.state.timerStep - ( (new Date().getTime() - this.state.intervalStart))
+        });
+    }
+
     //Slideshow auto present
     changeSlide = () => {
         if (this.state.id === this.state.idMax - 1){
             this.setState({id: 0});
-            this.setState({activeIndex: 0})
+            this.setState({activeIndex: 0});
         } else {
             this.setState(prev => {
                 return {
@@ -59,7 +70,7 @@ class Slideshow extends React.Component{
                 };
             });
         }
-        
+        this.setState({intervalStart: (new Date()).getTime()});
     }
 
     //Slideshow Navigation
@@ -70,9 +81,7 @@ class Slideshow extends React.Component{
         });
 
         //Reset auto show timer
-        clearInterval(this.state.intervalId);
-        var intervalId = setInterval(this.changeSlide, 10000);
-        this.setState({intervalId: intervalId});
+        this.resetTimer();
     }
 
     navPrevSlide = () => {
@@ -91,9 +100,7 @@ class Slideshow extends React.Component{
         }
 
         //Reset auto show timer
-        clearInterval(this.state.intervalId);
-        var intervalId = setInterval(this.changeSlide, 10000);
-        this.setState({intervalId: intervalId});
+        this.resetTimer();
     }
 
     navNextSlide = () => {
@@ -112,9 +119,7 @@ class Slideshow extends React.Component{
         }
 
         //Reset auto show timer
-        clearInterval(this.state.intervalId);
-        var intervalId = setInterval(this.changeSlide, 10000);
-        this.setState({intervalId: intervalId});
+        this.resetTimer();
     }
 
     //Handles the slideshow timer for modal content
@@ -123,8 +128,16 @@ class Slideshow extends React.Component{
     }
 
     startTimer = () =>{
-        var intervalId = setInterval(this.changeSlide, 10000);
+        var intervalId = setInterval(this.changeSlide, this.state.timerStep);
+        this.setState({intervalStart: (new Date()).getTime()});
         this.setState({intervalId: intervalId}); 
+    }
+
+    resetTimer = () =>{
+        clearInterval(this.state.intervalId);
+        var intervalId = setInterval(this.changeSlide, this.state.timerStep);
+        this.setState({intervalStart: (new Date()).getTime()});
+        this.setState({intervalId: intervalId});
     }
 
     render() {
@@ -144,7 +157,7 @@ class Slideshow extends React.Component{
                             <LiArray class = "slide-skill" list = {currentProject.skills}></LiArray>
                         </div>
                         <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn" id = "next" onClick = {this.navNextSlide}></img>
-                        <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn" id = "prev" onClick = {this.navNextSlide}></img>
+                        <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn" id = "prev" onClick = {this.navPrevSlide}></img>
                     </div>
                 </div>
                 <ModalSlideshow projData = {currentProject} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>
@@ -152,7 +165,7 @@ class Slideshow extends React.Component{
                         {Array.from({
                             length: this.state.idMax},
                             (_, index) => (
-                                <Bull index = {index} key = {index} isActive = {this.state.activeIndex === index} onClick = {this.navBullClick}/>
+                                <Bull index = {index} key = {index} isActive = {this.state.activeIndex === index} onClick = {this.navBullClick} timeRemain = {this.state.timeRemain}/>
                             )
                         )}
                     </div>

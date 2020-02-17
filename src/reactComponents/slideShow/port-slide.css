@@ -47,10 +47,6 @@
     letter-spacing: 25px;
 }
 
-.content-nav .active{
-  color: #4596ff;
-}
-
 .content-navOverlay{
   position: relative;
   text-align: center;
