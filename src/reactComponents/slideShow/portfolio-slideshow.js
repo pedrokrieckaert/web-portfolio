@@ -42,18 +42,34 @@ class Slideshow extends React.Component{
 
 
             var intervalId = setInterval(this.changeSlide, this.state.timerStep);
-            this.setState({intervalStart: (new Date()).getTime()});
-            setInterval(this.timeRemain,10);
             this.setState({intervalId: intervalId});
+            requestAnimationFrame(() =>{
+                this.setState({intervalStart: new Date().getTime()});
+                this.timeRemain();
+            });
     }
 
     componentWillUnmount(){
         clearInterval(this.state.intervalId);
     }
 
-    timeRemain = () => {
-        this.setState({
-            timeRemain: this.state.timerStep - ( (new Date().getTime() - this.state.intervalStart))
+    timeRemain = (timestamp) => {
+        var timestamp = timestamp || new Date().getTime();
+        var duration = this.state.timerStep;
+        var start = this.state.intervalStart;
+        var runtime = timestamp - start;
+        var progress = runtime / duration;
+        progress = Math.min(progress, 1);
+
+        if (runtime < duration){
+            requestAnimationFrame( (timestamp) =>{
+                this.timeRemain(timestamp);
+            });
+        }
+        requestAnimationFrame(() =>{
+            this.setState({
+                timeRemain: duration - ( (new Date().getTime() - start))
+            });
         });
     }
 

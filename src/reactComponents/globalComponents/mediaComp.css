@@ -11,6 +11,7 @@
 .mediaComp-container{
     position: relative;
     width: 100%;   
+    cursor: pointer;
 }
 
 .mediaComp-overlay{
@@ -33,4 +34,9 @@
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    transition-duration: 0.4s;
+}
+
+.mediaComp-container:hover .mediaComp-playBtn{
+    opacity: 0.7;
 }

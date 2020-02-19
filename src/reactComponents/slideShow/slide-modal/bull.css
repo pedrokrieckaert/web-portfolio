@@ -1,12 +1,15 @@
-.nav-bullet{
+  .nav-bullet{
     stroke-width: 3px;
+    cursor: pointer;
+  }
+
+  .nav-bullet:hover {
+    fill: #4596ff;
   }
   
   .inner-bullet{
+    fill: #fff;
     stroke: #fff;
-  }
-  
-  .stroke-bullet{
   }
    
   .bull-active .inner-bullet{
@@ -18,11 +21,14 @@
   }
   
   .bull-inactive .inner-bullet{
-    fill: #fff;
     stroke: none;
   }
   
   .bull-inactive .stroke-bullet{
     stroke: #4596ff;
     stroke-dashoffset: 0;
+  }
+
+  .bull-inactive, .bull-active{
+      margin: 10px;
   }

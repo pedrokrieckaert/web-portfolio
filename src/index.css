@@ -38,6 +38,7 @@ p, li, a{
   text-align: center;
   text-decoration: none;
   padding: 10px 15px;
+  cursor: pointer;
 
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
@@ -79,11 +80,11 @@ code {
 /* Footer styles------------------------------------*/
 footer{
   background-color: #343434;
+  padding: 15px 0 15px 25px
 }
 
 footer p{
   margin: 0;
-  padding: 15px 0 0 25px;
 }
 
 footer a{
