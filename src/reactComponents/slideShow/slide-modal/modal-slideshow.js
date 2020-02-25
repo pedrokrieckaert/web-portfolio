@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import ModalStyle from './modal-slideshow.css';
+import ModalStyle from './modal-slideshow.scss';
 import LiArray from '../../globalComponents/liArray';
  
 Modal.setAppElement('body');

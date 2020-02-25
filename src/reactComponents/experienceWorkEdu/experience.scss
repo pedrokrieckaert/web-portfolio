@@ -1,0 +1,29 @@
+.content-exp{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+
+    p{
+        text-align: center;
+    }
+
+    li{
+        padding-top: 20px;
+    }
+}
+
+
+.edu-container{
+    grid-column-start: 1;
+}
+
+.edu-head{
+    text-align: center;
+}
+
+.work-container{
+    grid-column-start: 2;
+}
+
+.work-head{
+    text-align: center;
+}

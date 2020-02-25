@@ -1,5 +1,5 @@
 import React from 'react';
-import './port-slide.css';
+import './portfolio-slideshow.scss';
 import Bull from './slide-modal/bull';
 import ModalSlideshow from './slide-modal/modal-slideshow';
 import LiArray from '../globalComponents/liArray';
@@ -38,28 +38,25 @@ class Slideshow extends React.Component{
                     idMax: responseJson.projects.length,
                     activeIndex: 0
                 });
-            });
-
-
-            var intervalId = setInterval(this.changeSlide, this.state.timerStep);
-            this.setState({intervalId: intervalId});
-            requestAnimationFrame(() =>{
-                this.setState({intervalStart: new Date().getTime()});
-                this.timeRemain();
+                requestAnimationFrame(() =>{
+                    this.startTimer();
+                    this.timeRemain();
+                });
+            })
+            .catch((error) => {
+                console.log('Error; ', error);
             });
     }
 
     componentWillUnmount(){
-        clearInterval(this.state.intervalId);
+        this.clearTimer();
     }
 
     timeRemain = (timestamp) => {
-        var timestamp = timestamp || new Date().getTime();
+        timestamp = timestamp || new Date().getTime();
         var duration = this.state.timerStep;
         var start = this.state.intervalStart;
         var runtime = timestamp - start;
-        var progress = runtime / duration;
-        progress = Math.min(progress, 1);
 
         if (runtime < duration){
             requestAnimationFrame( (timestamp) =>{
@@ -141,6 +138,10 @@ class Slideshow extends React.Component{
     //Handles the slideshow timer for modal content
     clearTimer = () => {
         clearInterval(this.state.intervalId);
+        cancelAnimationFrame(() =>{
+            this.startTimer();
+            this.timeRemain();
+        });
     }
 
     startTimer = () =>{
@@ -172,8 +173,8 @@ class Slideshow extends React.Component{
                             <p className = "slide-desc">{currentProject.desc}</p>
                             <LiArray class = "slide-skill" list = {currentProject.skills}></LiArray>
                         </div>
-                        <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn" id = "next" onClick = {this.navNextSlide}></img>
-                        <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn" id = "prev" onClick = {this.navPrevSlide}></img>
+                        <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn--next" onClick = {this.navNextSlide}></img>
+                        <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn--prev" onClick = {this.navPrevSlide}></img>
                     </div>
                 </div>
                 <ModalSlideshow projData = {currentProject} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>

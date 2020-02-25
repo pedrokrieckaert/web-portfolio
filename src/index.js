@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import Slideshow from './reactComponents/slideShow/portfolio-slideshow';
 import WorkExp from './reactComponents/experienceWorkEdu/portfolio-workExp';
 import * as serviceWorker from './serviceWorker';

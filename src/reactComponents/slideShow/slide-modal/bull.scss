@@ -1,0 +1,40 @@
+.nav-bullet{
+    stroke-width: 3px;
+    cursor: pointer;
+
+    &:hover{
+        fill: #4596ff;
+    }
+
+    &--inner{
+        @extend .nav-bullet;
+        fill: #fff;
+        stroke: #fff;
+
+        .bull--active &{
+            fill: #4596ff;
+        }
+        
+        .bull--inactive &{
+            stroke: none;
+        }
+    }
+
+    &--stroke{
+        @extend .nav-bullet;
+        
+        .bull--active &{
+            stroke: #4596ff;
+        }
+
+        .bull--inactive &{
+            stroke: #4596ff;
+            stroke-dashoffset: 0;
+        }
+    }
+    
+  }
+
+  .bull{
+      margin: 10px;
+  }

@@ -1,5 +1,5 @@
 import React from 'react';
-import './expWorkEdu.css'
+import './experience.scss'
 
 function port_work(){
     return (

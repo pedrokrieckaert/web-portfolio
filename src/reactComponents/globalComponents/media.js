@@ -1,5 +1,5 @@
 import React from 'react';
-import './mediaComp.css'
+import './media.scss'
 
 class Media extends React.Component{
     constructor(props){
