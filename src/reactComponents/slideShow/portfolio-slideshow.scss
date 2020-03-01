@@ -1,55 +1,71 @@
 .content-slide{
-    display: grid;
-    grid-template-rows: [head]50px [desc]300px [skills]50px;
-    grid-template-columns: repeat(2,1fr);
-    margin: 20px
+    position: relative;
+    margin: 20px;
+}
+
+.flex-container{
+    width: 100vw;
+}
+
+.slideshow-flex{
+    flex: 8;
+}
+
+.slideshow-container{
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 650px;
+}
+
+.slide-textOverlay{
+    position: absolute;
+    top: 0;
+    left: 10%;
+    height: 100%;
+    width: 80%;
+    pointer-events: none;
 }
 
 .slide-head{
-    grid-row-start: head;
-    grid-column-start: 2;
-    grid-column-end: 3;
-    text-align: center;        
+    text-align: left;        
 }
 
-.slide-img{
-    grid-row-start: head;
-    grid-row-end: 4;
-    grid-column-start: 1;
-    grid-column-end: 2;
-    border-radius: 4px;
-}
-
-.slide-desc{
-    grid-row-start: desc;
-    grid-column-start: 2;
-    grid-column-end: 3;
+.slide-text{
+    position: absolute;
+    right: 0;
+    color: red;
+    background: #00000050;
     padding: 20px;
-}
 
-.slide-skill{
-    margin: 0;
-    padding: 0;
-    grid-row-start: skills;
-    grid-column-start: 2;
-    grid-column-end: 3;
-    padding-left: 20px;
+    &--skill{
+        @extend .slide-text;
+        bottom: 15%;
+        margin: 0;
+        text-align: right;
 
-    li{
-        display: inline;
-        margin-left: 5px;
+        li{
+            display: inline;
+            margin-left: 5px;
+            font-size: 2vw;
+        }
+    }
+
+    &--desc{
+        @extend .slide-text;
+        bottom: 0;
+        font-size: 1.5vw;
+        text-align: right;
+        max-width: 50%;  
     }
 }
 
 .content-nav{
-    font-size: 50px;
     text-align: center;
-    letter-spacing: 25px;
 }
 
 .content-navOverlay{
   position: relative;
-  text-align: center;
 }
 
 .nav-btn{
@@ -78,6 +94,43 @@
 }
 
 .modal-open{
-  margin: 0 auto;
-  width: 100px
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 20px;
+    width: 100px;
+    pointer-events: initial !important;
 }
+
+
+/*Slideshow style data------------------------------------*/
+.slide{
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+}
+ /*transistion--*/
+ .transition-left1{
+     transition: left 1s ease-in-out;
+ }
+
+ /*posistions--*/
+ .pos-abs{
+     position: absolute;
+ }
+
+ .pos-rel{
+     position: relative;
+ }
+
+ .left-cur{
+     left: 0;
+ }
+
+ .left-next{
+     left: 100vw;
+ }
+
+ .left-prev{
+     left: -100vw;
+ }

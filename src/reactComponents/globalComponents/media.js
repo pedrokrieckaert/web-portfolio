@@ -28,24 +28,27 @@ class Media extends React.Component{
         if(this.props.vidSrc != null){
             if(this.state.vidActive === false){
                 imgVid = 
-                <div className = "mediaComp-container" onClick = {this.activeVideo}>
-                    <img className = "mediaComp-img" src = {this.props.imgSrc} alt = {this.props.imgAlt}></img>
+                <div className = {"mediaComp-container " + this.props.position + " " + this.props.transition} onClick = {this.activeVideo}>
+                    <img className = "mediaComp--img" src = {this.props.imgSrc} alt = {this.props.imgAlt}></img>
                     <div className = "mediaComp-overlay">
                         <img className = "mediaComp-playBtn" src = "./imgs/globalMedia/play.svg" alt = "Play Icon"></img>
                     </div>
-                </div>
+                </div>;
             } else {
                 imgVid = 
-                <video className = "mediaComp-video" onPlay = {this.props.clearTimer} onPause = {this.props.startTimer} autoPlay muted controls>
+                <video className = "mediaComp--video" onPlay = {this.props.clearTimer} onPause = {this.props.startTimer} autoPlay muted>
                     <source src = {this.props.vidSrc} type = "video/mp4"></source>
                 </video>;
             }
 
         } else {
-            imgVid = <img className = "mediaComp-img" src = {this.props.imgSrc} alt = {this.props.imgAlt}></img>;
+            imgVid = 
+            <div className= {"mediaComp-container " + this.props.position + " " + this.props.transition}>
+                <img className = "mediaComp--img" src = {this.props.imgSrc} alt = {this.props.imgAlt}></img>
+            </div>
         }
         return(
-            <div className = {this.props.class}>{imgVid}</div>
+            <div>{imgVid}</div>
         );
     }
 }

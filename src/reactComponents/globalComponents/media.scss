@@ -1,15 +1,18 @@
-.mediaComp-video{
-    width: 650px;
-    height: 400px;
-}
+.mediaComp{
+    width: 75%;
+    height: auto;
 
-.mediaComp-img{
-    width: 650px;
-    height: 400px;
+    &--img{
+        @extend .mediaComp;
+    }
+
+    &--video{
+        @extend .mediaComp;
+    }
 }
 
 .mediaComp-container{
-    position: relative;
+    position: absolute;
     width: 100%;   
     cursor: pointer;
 

@@ -3,7 +3,8 @@ import './portfolio-slideshow.scss';
 import Bull from './slide-modal/bull';
 import ModalSlideshow from './slide-modal/modal-slideshow';
 import LiArray from '../globalComponents/liArray';
-import Media from '../globalComponents/media';
+import Slide from './slide';
+//import Media from '../globalComponents/media';
 
 class Slideshow extends React.Component{
     constructor(props){
@@ -19,6 +20,22 @@ class Slideshow extends React.Component{
             "detaildesc":"temp"}],
             id: 0,
             idMax: null,
+            slide1: {
+                id: 0,
+                position: "left-cur",
+                transition: true
+            },
+            slide2: {
+                id: 1,
+                position: "left-next",
+                transition: true
+            },
+            styles: {
+                onScreen: "left-cur",
+                offScreenNext: "left-next",
+                offScreenPrev: "left-prev",
+                transition: "transition-left1"
+            },
             intervalId: null,
             intervalStart: null,
             timerStep: 10000,
@@ -70,20 +87,66 @@ class Slideshow extends React.Component{
         });
     }
 
+    setSlideState = (slide1, slide2, id) =>{
+        this.setState({
+            slide1: slide1,
+            slide2: slide2,
+            id: id
+        });
+    }
+
     //Slideshow auto present
     changeSlide = () => {
-        if (this.state.id === this.state.idMax - 1){
-            this.setState({id: 0});
-            this.setState({activeIndex: 0});
+        const slide1 = this.state.slide1,
+            slide2 = this.state.slide2,
+            s = this.state.styles;
+        let id;
+
+        if (slide1["position"] === s.onScreen){
+            slide1["position"] = s.offScreenPrev;
+            slide2["position"] = s.onScreen;
+            id = slide1.id;
         } else {
-            this.setState(prev => {
-                return {
-                    id: prev.id + 1,
-                    activeIndex: prev.activeIndex + 1
-                };
-            });
+            slide1['position'] = s.onScreen;
+            slide2['position'] = s.offScreenPrev;
+            id = slide2.id;
         }
+
+        this.setSlideState(slide1, slide2, id);
+        setTimeout(() => {
+            this.resetPrevSlide();
+        }, 1000);
+
         this.setState({intervalStart: (new Date()).getTime()});
+    }
+
+    resetPrevSlide = () => {
+        const slide1 = this.state.slide1,
+            slide2 = this.state.slide2,
+            s = this.state.styles,
+            slides = this.state.idMax,
+            id =this.state.id;
+
+            if (slide1["position"] === s.offScreenPrev) {
+                slide1["transition"] = false;
+                slide1["position"] = s.offScreenNext;
+                slide1["id"] = slide2.id + 1 === slides ? 0 : slide2.id + 1;
+            } else {
+                slide2["transition"] = false;
+                slide2["position"] = s.offScreenNext;
+                slide2["id"] = slide1.id + 1 === slides ? 0 : slide1.id + 1;
+            }
+
+            this.setSlideState(slide1, slide2, id);
+            this.resetTransition(slide1, slide2, id)
+    }
+
+    resetTransition = (slide1, slide2, id) =>{
+        setTimeout(() => {
+            slide1["transition"] = true;
+            slide2["transition"] = true;
+            this.setSlideState(slide1, slide2, id);
+        }, 500);
     }
 
     //Slideshow Navigation
@@ -140,7 +203,7 @@ class Slideshow extends React.Component{
         clearInterval(this.state.intervalId);
         cancelAnimationFrame(() =>{
             this.startTimer();
-            this.timeRemain();
+            this.timeRemain();  
         });
     }
 
@@ -158,27 +221,40 @@ class Slideshow extends React.Component{
     }
 
     render() {
-        var currentProject = this.state.projects[this.state.id];
-
-        return(
+        const currentProject = this.state.projects[this.state.id],
+            s = this.state.styles,
+            slide1 = this.state.slide1,
+            slide2 = this.state.slide2;
+        var nextProject = this.state.projects[this.state.slide2.id];
+        let slideshowDisplay;
+        if (this.state.idMax !== null){
+            slideshowDisplay =
             <div>
-                <div className="content-grid">
-                    <div className = "content-head">
-                        <h2>Portfolio</h2>
-                    </div>
-                    <div className = "content-navOverlay">
-                        <div className = "content-slide">
-                            <Media class = "slide-img" imgAlt = {currentProject.image.alt} imgSrc = {currentProject.image.src} vidSrc = {currentProject.video} clearTimer = {this.clearTimer} startTimer = {this.startTimer}></Media>
-                            <h3 className = "slide-head">{currentProject.name}</h3>
-                            <p className = "slide-desc">{currentProject.desc}</p>
-                            <LiArray class = "slide-skill" list = {currentProject.skills}></LiArray>
+                <div className = "content-navOverlay">
+                    <div className = "slideshow-container">
+                        <Slide 
+                            alt = {currentProject.image.alt}
+                            src = {currentProject.image.src}
+                            position = {slide1.position}
+                            transition = {slide1.transition ? s.transition : ""}
+                        /> 
+                        <Slide
+                            alt = {nextProject.image.alt}
+                            src = {nextProject.image.src}
+                            position = {slide2.position}
+                            transition = {slide2.transition ? s.transition : ""}
+                        />
+                        <div className = "slide-textOverlay">
+                            <h2 className = "slide-head">{currentProject.name}</h2>
+                            <LiArray class = "slide-text--skill" list = {currentProject.skills}></LiArray>
+                            <p className = "slide-text--desc">{currentProject.desc}</p>
+                            <ModalSlideshow projData = {currentProject} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>
                         </div>
+                    </div>
                         <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn--next" onClick = {this.navNextSlide}></img>
                         <img src = "./imgs/globalMedia/next.svg" alt = "next/prev button" className = "nav-btn--prev" onClick = {this.navPrevSlide}></img>
                     </div>
-                </div>
-                <ModalSlideshow projData = {currentProject} clearTimer = {this.clearTimer} startTimer = {this.startTimer}/>
-                <div className = "content-nav">
+                    <div className = "content-nav">
                         {Array.from({
                             length: this.state.idMax},
                             (_, index) => (
@@ -186,6 +262,20 @@ class Slideshow extends React.Component{
                             )
                         )}
                     </div>
+                </div>;
+        } else {
+            slideshowDisplay = 
+            <div>
+                <h2>Hold this L</h2>
+            </div>;
+        } 
+
+        return(
+            <div className ="flex-container">
+                <h2 className = "content-head">Portfolio</h2>
+                <div className = "slideshow-flex">
+                    {slideshowDisplay}
+                </div>
             </div>
 
         );
