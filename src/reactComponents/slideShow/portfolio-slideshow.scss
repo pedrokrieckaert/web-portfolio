@@ -3,19 +3,11 @@
     margin: 20px;
 }
 
-.flex-container{
-    width: 100vw;
-}
-
-.slideshow-flex{
-    flex: 8;
-}
-
 .slideshow-container{
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 650px;
+    height: 38vw;
 }
 
 .slide-textOverlay{
@@ -61,6 +53,7 @@
 }
 
 .content-nav{
+    margin-top: 15px;
     text-align: center;
 }
 
@@ -104,11 +97,6 @@
 
 
 /*Slideshow style data------------------------------------*/
-.slide{
-    position: absolute;
-    width: 100vw;
-    height: 100%;
-}
  /*transistion--*/
  .transition-left1{
      transition: left 1s ease-in-out;

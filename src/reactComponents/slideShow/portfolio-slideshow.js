@@ -23,12 +23,14 @@ class Slideshow extends React.Component{
             slide1: {
                 id: 0,
                 position: "left-cur",
-                transition: true
+                transition: true,
+                screen: true
             },
             slide2: {
                 id: 1,
                 position: "left-next",
-                transition: true
+                transition: true,
+                screen: false
             },
             styles: {
                 onScreen: "left-cur",
@@ -36,6 +38,8 @@ class Slideshow extends React.Component{
                 offScreenPrev: "left-prev",
                 transition: "transition-left1"
             },
+
+            renderSlide: false,
             intervalId: null,
             intervalStart: null,
             timerStep: 10000,
@@ -69,6 +73,8 @@ class Slideshow extends React.Component{
         this.clearTimer();
     }
 
+    //Calculates the remaining time for the nav bullet animation
+    //the value is passed per available animation frame
     timeRemain = (timestamp) => {
         timestamp = timestamp || new Date().getTime();
         var duration = this.state.timerStep;
@@ -87,32 +93,91 @@ class Slideshow extends React.Component{
         });
     }
 
-    setSlideState = (slide1, slide2, id) =>{
+    //Updates the state variables with the mutated constants
+    //Reverse for any function requiring a reversed animation
+    setSlideState = (slide1, slide2, id, render) =>{
         this.setState({
             slide1: slide1,
             slide2: slide2,
-            id: id
+            id: id,
+            activeIndex: id,
+            renderSlide: render
         });
     }
 
-    //Slideshow auto present
-    changeSlide = () => {
+    prepOffSlide = (reverse) =>{
+        const s = this.state.styles,
+        slide1 = this.state.slide1,
+        slide2 = this.state.slide2,
+        id = this.state.id;
+
+        if(slide1["position"] !== s.onScreen){
+            if (reverse) {
+                slide1["position"] = s.offScreenPrev;
+            } else {
+                slide1["position"] = s.offScreenNext;
+            }
+            slide1["transition"] = false;
+        } else {
+            if (reverse) {
+                slide2["position"] = s.offScreenPrev;
+            } else {
+                slide2["position"] = s.offScreenNext;
+            }
+            slide2["transition"] = false;
+        }
+
+        
+        this.setSlideState(slide1, slide2, id, false);
+        this.resetTransition(slide1, slide2, id)
+
+        setTimeout(() => {
+            this.changeSlide(reverse);
+        }, 500);
+    }
+
+    //Rests the transistion boolean after the clean up,
+    //Covers both slides, updates the state variables with the new boolean
+    resetTransition = (slide1, slide2, id) =>{
+        setTimeout(() => {
+            slide1["transition"] = true;
+            slide2["transition"] = true;
+            this.setSlideState(slide1, slide2, id, false);
+        }, 500);
+    }
+
+    //Slideshow slide animator
+    changeSlide = (reverse) => {
         const slide1 = this.state.slide1,
             slide2 = this.state.slide2,
             s = this.state.styles;
         let id;
 
-        if (slide1["position"] === s.onScreen){
-            slide1["position"] = s.offScreenPrev;
-            slide2["position"] = s.onScreen;
-            id = slide1.id;
-        } else {
-            slide1['position'] = s.onScreen;
-            slide2['position'] = s.offScreenPrev;
-            id = slide2.id;
+
+        if(reverse === true){
+            if (slide1["position"] === s.onScreen){
+                slide1["position"] = s.offScreenNext;
+                slide2["position"] = s.onScreen;
+                id = slide2.id;
+            } else {
+                slide1['position'] = s.onScreen;
+                slide2['position'] = s.offScreenNext;
+                id = slide1.id;
+            }
+        } else{
+            if (slide1["position"] === s.onScreen){
+                slide1["position"] = s.offScreenPrev;
+                slide2["position"] = s.onScreen;
+                id = slide2.id;
+            } else {
+                slide1['position'] = s.onScreen;
+                slide2['position'] = s.offScreenPrev;
+                id = slide1.id;
+            }
         }
 
-        this.setSlideState(slide1, slide2, id);
+        this.setSlideState(slide1, slide2, id, true);
+
         setTimeout(() => {
             this.resetPrevSlide();
         }, 1000);
@@ -120,60 +185,74 @@ class Slideshow extends React.Component{
         this.setState({intervalStart: (new Date()).getTime()});
     }
 
+    //Slide clean up, preps offscreen slide with next image
     resetPrevSlide = () => {
         const slide1 = this.state.slide1,
             slide2 = this.state.slide2,
             s = this.state.styles,
             slides = this.state.idMax,
-            id =this.state.id;
+            id = this.state.id;
 
-            if (slide1["position"] === s.offScreenPrev) {
-                slide1["transition"] = false;
-                slide1["position"] = s.offScreenNext;
+            if (slide1["position"] !== s.onScreen) {
+                //slide1["position"] = s.offScreenNext;
                 slide1["id"] = slide2.id + 1 === slides ? 0 : slide2.id + 1;
+                slide1.screen = false;
             } else {
-                slide2["transition"] = false;
-                slide2["position"] = s.offScreenNext;
+                //slide2["position"] = s.offScreenNext;
                 slide2["id"] = slide1.id + 1 === slides ? 0 : slide1.id + 1;
+                slide2.screen = true;
             }
 
-            this.setSlideState(slide1, slide2, id);
-            this.resetTransition(slide1, slide2, id)
+            this.setSlideState(slide1, slide2, id, false);
+           // this.resetTransition(slide1, slide2, id)
     }
 
-    resetTransition = (slide1, slide2, id) =>{
-        setTimeout(() => {
-            slide1["transition"] = true;
-            slide2["transition"] = true;
-            this.setSlideState(slide1, slide2, id);
-        }, 500);
-    }
-
-    //Slideshow Navigation
+    //Slideshow Bullet Navigation
     navBullClick = (index) => {
-        this.setState({
-            activeIndex: index,
-            id: index
-        });
+        const slide1 = this.state.slide1,
+            slide2 = this.state.slide2,
+            s = this.state.styles;
+
+        if (slide1["position"] === s.onScreen){
+            slide2.id = index;
+        } else {
+            slide1.id = index;
+        }
+
+        //Updates the component state variables
+        this.setSlideState(slide1, slide2, index);
+
+        //Handles the slide animation and clean up
+        this.changeSlide();
 
         //Reset auto show timer
         this.resetTimer();
     }
 
     navPrevSlide = () => {
-        if(this.state.id === 0){
-            this.setState({
-                id: this.state.idMax - 1,
-                activeIndex: this.state.idMax - 1
-            })
+        const slide1 = this.state.slide1,
+            slide2 = this.state.slide2,
+            s = this.state.styles,
+            max = this.state.idMax;
+        var id = this.state.id;
+
+        if(id === 0){
+            id = max - 1;
         }else{
-            this.setState(prev =>{
-                return{
-                    id: prev.id - 1,
-                    activeIndex: prev.activeIndex -1
-                };
-            });
+            id = id -1;
         }
+
+        if (slide1["position"] === s.onScreen){
+            slide2.id = id;
+        } else {
+            slide1.id = id;
+        }
+
+        //Updates the component state variables
+        this.setSlideState(slide1, slide2, id, false);
+
+        //Handles the slide animation and clean up
+        this.changeSlide(true);
 
         //Reset auto show timer
         this.resetTimer();
@@ -208,42 +287,54 @@ class Slideshow extends React.Component{
     }
 
     startTimer = () =>{
-        var intervalId = setInterval(this.changeSlide, this.state.timerStep);
+        var intervalId = setInterval(this.prepOffSlide, this.state.timerStep);
         this.setState({intervalStart: (new Date()).getTime()});
         this.setState({intervalId: intervalId}); 
     }
 
     resetTimer = () =>{
         clearInterval(this.state.intervalId);
-        var intervalId = setInterval(this.changeSlide, this.state.timerStep);
+        var intervalId = setInterval(this.prepOffSlide, this.state.timerStep);
         this.setState({intervalStart: (new Date()).getTime()});
         this.setState({intervalId: intervalId});
     }
 
     render() {
-        const currentProject = this.state.projects[this.state.id],
+        const 
+            currentProject = this.state.projects[this.state.id],
             s = this.state.styles,
             slide1 = this.state.slide1,
             slide2 = this.state.slide2;
-        var nextProject = this.state.projects[this.state.slide2.id];
+
+        var 
+            S1Project = this.state.projects[slide1.id],
+            S2Project = this.state.projects[slide2.id];
+            
+
         let slideshowDisplay;
+
+        //Conditional logic to prevent rendering of ellements dependant on the fetched data
         if (this.state.idMax !== null){
+
             slideshowDisplay =
             <div>
                 <div className = "content-navOverlay">
                     <div className = "slideshow-container">
-                        <Slide 
-                            alt = {currentProject.image.alt}
-                            src = {currentProject.image.src}
-                            position = {slide1.position}
-                            transition = {slide1.transition ? s.transition : ""}
-                        /> 
-                        <Slide
-                            alt = {nextProject.image.alt}
-                            src = {nextProject.image.src}
-                            position = {slide2.position}
-                            transition = {slide2.transition ? s.transition : ""}
-                        />
+
+                    <Slide 
+                    alt = {S1Project.image.alt}
+                    src = {S1Project.image.src}
+                    position = {slide1.position}
+                    transition = {slide1.transition ? s.transition : "none"}
+                    />
+
+                    <Slide
+                    alt = {S2Project.image.alt}
+                    src = {S2Project.image.src}
+                    position = {slide2.position}
+                    transition = {slide2.transition ? s.transition : "none"}
+                    />
+                        
                         <div className = "slide-textOverlay">
                             <h2 className = "slide-head">{currentProject.name}</h2>
                             <LiArray class = "slide-text--skill" list = {currentProject.skills}></LiArray>
@@ -271,11 +362,9 @@ class Slideshow extends React.Component{
         } 
 
         return(
-            <div className ="flex-container">
+            <div style = {{width: window.innerWidth - 16.4 + ' px'}}>
                 <h2 className = "content-head">Portfolio</h2>
-                <div className = "slideshow-flex">
-                    {slideshowDisplay}
-                </div>
+                {slideshowDisplay}
             </div>
 
         );
