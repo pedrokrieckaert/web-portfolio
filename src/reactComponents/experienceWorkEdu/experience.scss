@@ -1,9 +1,12 @@
 .content-exp{
-    display:grid;
-    grid-template-columns: repeat(2,1fr);
+    display: block;
+    text-align: center;
 
-    p{
-        text-align: center;
+    padding: 0 0 15px 0;
+
+    ul{
+        padding: 0;
+        list-style-position: inside;
     }
 
     li{
@@ -11,19 +14,6 @@
     }
 }
 
-
-.edu-container{
-    grid-column-start: 1;
-}
-
-.edu-head{
-    text-align: center;
-}
-
-.work-container{
-    grid-column-start: 2;
-}
-
-.work-head{
-    text-align: center;
+.edu-list{
+    margin: 0 15px;
 }

@@ -23,14 +23,12 @@ class Slideshow extends React.Component{
             slide1: {
                 id: 0,
                 position: "left-cur",
-                transition: true,
-                screen: true
+                transition: true
             },
             slide2: {
                 id: 1,
                 position: "left-next",
-                transition: true,
-                screen: false
+                transition: true
             },
             styles: {
                 onScreen: "left-cur",
@@ -39,7 +37,6 @@ class Slideshow extends React.Component{
                 transition: "transition-left1"
             },
 
-            renderSlide: false,
             intervalId: null,
             intervalStart: null,
             timerStep: 10000,
@@ -47,9 +44,10 @@ class Slideshow extends React.Component{
         }
     }
 
+    //Aquire slideshow content when the component is active
     componentDidMount() {
-        //fetch('https://pedrokrieckaert.github.io/data/slideShow.json')
-        fetch('./data/slideShow.json')
+        fetch('https://pedrokrieckaert.github.io/data/slideShow.json')
+        //fetch('./data/slideShow.json')
             .then((response) => {
                 return response.json();
             })
@@ -69,6 +67,7 @@ class Slideshow extends React.Component{
             });
     }
 
+    //Clean up timers when the component is being used anymore
     componentWillUnmount(){
         this.clearTimer();
     }
@@ -95,16 +94,18 @@ class Slideshow extends React.Component{
 
     //Updates the state variables with the mutated constants
     //Reverse for any function requiring a reversed animation
-    setSlideState = (slide1, slide2, id, render) =>{
+    setSlideState = (slide1, slide2, id) =>{
         this.setState({
             slide1: slide1,
             slide2: slide2,
             id: id,
-            activeIndex: id,
-            renderSlide: render
+            activeIndex: id
         });
     }
 
+    //Sets the slide offscreen slide to the appropiate location for the next animation
+    //Example: If the previous slide is called, the function places the off screen slide on the left
+    //Timeout is used to give time for a function to complete all it's actions
     prepOffSlide = (reverse) =>{
         const s = this.state.styles,
         slide1 = this.state.slide1,
@@ -128,7 +129,7 @@ class Slideshow extends React.Component{
         }
 
         
-        this.setSlideState(slide1, slide2, id, false);
+        this.setSlideState(slide1, slide2, id);
         this.resetTransition(slide1, slide2, id)
 
         setTimeout(() => {
@@ -138,15 +139,19 @@ class Slideshow extends React.Component{
 
     //Rests the transistion boolean after the clean up,
     //Covers both slides, updates the state variables with the new boolean
+    //Timeout is to give time for all the changes to occur
     resetTransition = (slide1, slide2, id) =>{
         setTimeout(() => {
             slide1["transition"] = true;
             slide2["transition"] = true;
-            this.setSlideState(slide1, slide2, id, false);
+            this.setSlideState(slide1, slide2, id);
         }, 500);
     }
 
     //Slideshow slide animator
+    //First the "reverse" parameter is used to determine if the slide has to go back, the animation is reversed
+    //Based on the active screen, css styles of the local variables are changed, these changes are passed to the state variable through another function
+    //The active ID is altered to be that of the next slide
     changeSlide = (reverse) => {
         const slide1 = this.state.slide1,
             slide2 = this.state.slide2,
@@ -176,17 +181,17 @@ class Slideshow extends React.Component{
             }
         }
 
-        this.setSlideState(slide1, slide2, id, true);
+        this.setSlideState(slide1, slide2, id);
 
         setTimeout(() => {
-            this.resetPrevSlide();
+            this.updateId();
         }, 1000);
 
         this.setState({intervalStart: (new Date()).getTime()});
     }
 
-    //Slide clean up, preps offscreen slide with next image
-    resetPrevSlide = () => {
+    //Changes the ID of the off screen slide to be the upcoming ID
+    updateId = () => {
         const slide1 = this.state.slide1,
             slide2 = this.state.slide2,
             s = this.state.styles,
@@ -194,17 +199,12 @@ class Slideshow extends React.Component{
             id = this.state.id;
 
             if (slide1["position"] !== s.onScreen) {
-                //slide1["position"] = s.offScreenNext;
                 slide1["id"] = slide2.id + 1 === slides ? 0 : slide2.id + 1;
-                slide1.screen = false;
             } else {
-                //slide2["position"] = s.offScreenNext;
                 slide2["id"] = slide1.id + 1 === slides ? 0 : slide1.id + 1;
-                slide2.screen = true;
             }
 
-            this.setSlideState(slide1, slide2, id, false);
-           // this.resetTransition(slide1, slide2, id)
+            this.setSlideState(slide1, slide2, id);
     }
 
     //Slideshow Bullet Navigation
@@ -213,22 +213,37 @@ class Slideshow extends React.Component{
             slide2 = this.state.slide2,
             s = this.state.styles;
 
-        if (slide1["position"] === s.onScreen){
+        var reverse = false,
+        noSwitch = false;
+
+        if (slide1["position"] === s.onScreen && index !== slide1.id){
+            if(index < slide2.id){
+                reverse = true;
+            }
             slide2.id = index;
-        } else {
+        } else  if (slide2["position"] === s.onScreen && index !== slide2.id){
+            if(index < slide1.id){
+                reverse = true;
+            }
             slide1.id = index;
+        } else {
+            noSwitch = true;
         }
 
-        //Updates the component state variables
-        this.setSlideState(slide1, slide2, index);
+        //Conditional to prevent animation if the same slide is selected
+        if(noSwitch === false){
+            //Updates the component state variables
+            this.setSlideState(slide1, slide2, index);
 
-        //Handles the slide animation and clean up
-        this.changeSlide();
+            //Preps slides for animation
+            this.prepOffSlide(reverse);
 
-        //Reset auto show timer
-        this.resetTimer();
+            //Reset auto show timer
+            this.resetTimer();
+        }
     }
 
+    //Go to previous slide in the order, ID is updated
     navPrevSlide = () => {
         const slide1 = this.state.slide1,
             slide2 = this.state.slide2,
@@ -249,35 +264,46 @@ class Slideshow extends React.Component{
         }
 
         //Updates the component state variables
-        this.setSlideState(slide1, slide2, id, false);
+        this.setSlideState(slide1, slide2, id);
 
         //Handles the slide animation and clean up
-        this.changeSlide(true);
+        this.prepOffSlide(true);
 
         //Reset auto show timer
         this.resetTimer();
     }
 
+    //Go to the next slide in the order, ID is updated
     navNextSlide = () => {
-        if(this.state.id === this.state.idMax - 1){
-            this.setState({
-                id: 0,
-                activeIndex: 0
-            })
+        const slide1 = this.state.slide1,
+            slide2 = this.state.slide2,
+            s = this.state.styles,
+            max = this.state.idMax;
+        var id = this.state.id;
+
+        if(id === (max - 1)){
+            id = 0;
         }else{
-            this.setState(prev =>{
-                return{
-                    id: prev.id + 1,
-                    activeIndex: prev.activeIndex + 1
-                };
-            });
+            id = id +1;
         }
 
+        if (slide1["position"] === s.onScreen){
+            slide2.id = id;
+        } else {
+            slide1.id = id;
+        }
+
+        //Updates the component state variables
+        this.setSlideState(slide1, slide2, id);
+
+        //Handles the slide animation and clean up
+        this.prepOffSlide(false);
+
         //Reset auto show timer
         this.resetTimer();
     }
 
-    //Handles the slideshow timer for modal content
+    //Clears all timers and intervals
     clearTimer = () => {
         clearInterval(this.state.intervalId);
         cancelAnimationFrame(() =>{
@@ -286,18 +312,21 @@ class Slideshow extends React.Component{
         });
     }
 
+    //Starts all timers and intervals, along with other time based variables
     startTimer = () =>{
         var intervalId = setInterval(this.prepOffSlide, this.state.timerStep);
         this.setState({intervalStart: (new Date()).getTime()});
         this.setState({intervalId: intervalId}); 
     }
 
+    //Resets all timers and intervals, used when the user overides the slideshow timer with navigation inputs
     resetTimer = () =>{
         clearInterval(this.state.intervalId);
         var intervalId = setInterval(this.prepOffSlide, this.state.timerStep);
         this.setState({intervalStart: (new Date()).getTime()});
         this.setState({intervalId: intervalId});
     }
+
 
     render() {
         const 
@@ -357,7 +386,7 @@ class Slideshow extends React.Component{
         } else {
             slideshowDisplay = 
             <div>
-                <h2>Hold this L</h2>
+                <h2>There was an error while loading.</h2>
             </div>;
         } 
 
